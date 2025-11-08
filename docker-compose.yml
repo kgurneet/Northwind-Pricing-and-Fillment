@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16
+    container_name: northwind_sla_db
+    environment:
+      POSTGRES_USER: ${PGUSER:-postgres}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-postgres}
+      POSTGRES_DB: ${PGDATABASE:-northwind_sla}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${PGPORT:-5432}:5432"
+    volumes:
+      - ./_data/db:/var/lib/postgresql/data
+      - ./sql/raw:/docker-entrypoint-initdb.d/raw:ro
+      - ./sql/model:/docker-entrypoint-initdb.d/model:ro
+      - ./exports:/exports
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER:-postgres} -d ${PGDATABASE:-northwind_sla}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
