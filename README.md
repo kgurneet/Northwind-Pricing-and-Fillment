@@ -1,4 +1,4 @@
-# Northwind Pricing & Fulfillment SLA — Basic Starter
+# Northwind Pricing & Fulfillment SLA
 
 This minimal project computes SLA metrics (lead time, on-time rate, late-day
 buckets, No-SLA flags) and exports Power BI / Excel-friendly CSVs.
